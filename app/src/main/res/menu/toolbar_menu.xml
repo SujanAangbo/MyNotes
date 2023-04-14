@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/notes"
+        android:title="Notes"
+        android:contentDescription="It shows all the notes."
+        android:icon="@drawable/notes"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/todo"
+        android:title="Todo"
+        android:contentDescription="It shows all the todo."
+        android:icon="@drawable/todo"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/setting"
+        android:title="Settings"
+        android:contentDescription="Settings of My Notes app."
+        android:icon="@drawable/settings"
+        app:showAsAction="always"
+        />
+
+</menu>

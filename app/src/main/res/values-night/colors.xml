@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--   Color For night mode   -->
+    <color name="background">#413C51</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="primaryVarient">#393053</color>
+    <color name="primary">#443C68</color>
+    <color name="stroke">#D2D0DD</color>
+
+</resources>
