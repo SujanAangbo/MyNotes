@@ -68,7 +68,7 @@ class NoteAdapter(
 
             AlertDialog.Builder(context)
                 .setTitle("Delete")
-                .setMessage("Do you want to delete this todo?")
+                .setMessage("Do you want to delete this note?")
                 .setPositiveButton("Delete") { dialog, it ->
                     Thread {
                         // delete with id
