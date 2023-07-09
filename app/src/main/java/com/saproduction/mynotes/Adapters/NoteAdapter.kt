@@ -1,6 +1,7 @@
 package com.saproduction.mynotes.Adapters
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -14,10 +15,15 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.saproduction.mynotes.Database.DatabaseObj
 import com.saproduction.mynotes.Database.NotesDatabase.NoteModel
+import com.saproduction.mynotes.MainActivity
 import com.saproduction.mynotes.NotesActivity
 import com.saproduction.mynotes.R
 
-class NoteAdapter(private var list: MutableList<NoteModel>, @LayoutRes var layout: Int, private var context: Context) :
+class NoteAdapter(
+    private var list: MutableList<NoteModel>,
+    @LayoutRes var layout: Int,
+    private var context: Context
+) :
     Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -58,28 +64,30 @@ class NoteAdapter(private var list: MutableList<NoteModel>, @LayoutRes var layou
         // Delete data from database
         holder.deleteTv.setOnClickListener {
 
-            val db = DatabaseObj.getNotesDatabase(context)
+            // here
 
-            Thread {
-                db.notesDao().deleteById(id) // remove data from the database
+            AlertDialog.Builder(context)
+                .setTitle("Delete")
+                .setMessage("Do you want to delete this todo?")
+                .setPositiveButton("Delete") { dialog, it ->
+                    Thread {
+                        // delete with id
+                        val db = DatabaseObj.getNotesDatabase(context)
+                        db.notesDao().deleteById(id) // remove data from the database
 
-                // Thread to change UI
-                (context as Activity).runOnUiThread {
+                        (context as MainActivity).runOnUiThread {
 
-                    // first remove element from the list and then only call notifyDataSetChanged() method
-                    list.removeAt(position) // remove data from the RV list
-//                    notifyItemRemoved(position)
-                    notifyDataSetChanged()
-
-//                    Toast.makeText(
-//                        context,
-//                        "$title $position has been deleted.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+                            // first remove element from the list and then only call notifyDataSetChanged() method
+                            list.removeAt(position) // remove data from the RV list
+                            notifyDataSetChanged()
+                            dialog.cancel()
+                        }
+                    }.start()
 
                 }
-            }.start()
-
+                .setNegativeButton("No") { dialog, it ->
+                    dialog.cancel()
+                }.show()
         }
 
     }
@@ -94,5 +102,4 @@ class NoteAdapter(private var list: MutableList<NoteModel>, @LayoutRes var layou
         var dateTv: TextView = itemView.findViewById(R.id.tv_date)
         var deleteTv: ImageView = itemView.findViewById(R.id.tv_delete)
     }
-
 }
